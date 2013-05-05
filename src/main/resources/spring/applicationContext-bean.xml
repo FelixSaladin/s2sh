@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+<!-- Dao -->	
+	<bean id="userDao" class="biz.ezcom.s2sh.dao.impl.UserDao" scope="singleton">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+<!-- Service -->	
+	<bean id="userService" class="biz.ezcom.s2sh.service.impl.UserService" scope="singleton">
+		<property name="userDao" ref="userDao" />
+	</bean>
+	
+<!-- 代理Service -->
+	<!-- 
+	<bean id="userServiceTarget" class="biz.ezcom.s2sh.service.impl.UserService" scope="singleton">
+		<property name="userDao" ref="userDao" />
+	</bean>	
+	<bean id="userService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="target" ref="userServiceTarget" />
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean> -->
+	
+<!-- Action -->	
+	<bean id="saveUserAction" class="biz.ezcom.s2sh.action.SaveUserAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean id="listUserAction" class="biz.ezcom.s2sh.action.ListUserAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean id="deleteUserAction" class="biz.ezcom.s2sh.action.DeleteUserAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean id="updateUserAction" class="biz.ezcom.s2sh.action.UpdateUserAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean id="updateUserSubmitAction" class="biz.ezcom.s2sh.action.UpdateUserSubmitAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+</beans>

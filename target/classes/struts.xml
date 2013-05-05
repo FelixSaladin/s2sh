@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+
+    <package name="ssh" namespace="/" extends="struts-default">
+		<action name="saveUser" class="saveUserAction">
+			<result name="success" type="redirectAction">listUser.action</result>
+		</action>
+		<action name="listUser" class="listUserAction">
+			<result name="success" type="dispatcher">/list.jsp</result>
+		</action>
+		<action name="deleteUser" class="deleteUserAction">
+			<result name="success" type="redirectAction">listUser.action</result>
+		</action>
+		<action name="updateUser" class="updateUserAction">
+			<result name="success" type="dispatcher">/update.jsp</result>
+		</action>
+		<action name="updateUserSubmit" class="updateUserSubmitAction">
+			<result name="success" type="redirectAction">listUser.action</result>
+		</action>
+    </package>
+
+</struts>
